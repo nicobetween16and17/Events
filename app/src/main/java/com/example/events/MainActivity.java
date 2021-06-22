@@ -17,14 +17,14 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements  HomeFragment.OnNavListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         HomeFragment home = HomeFragment.newInstance();
-        home.setNavListener((HomeFragment.OnNavListener) this);
+        home.setNavListener(this);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frag_main_content, home);
