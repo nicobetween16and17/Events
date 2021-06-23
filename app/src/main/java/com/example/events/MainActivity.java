@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.events.frags.EventDetailFragment;
 import com.example.events.frags.HomeFragment;
 import android.os.Bundle;
 import android.widget.Button;
@@ -61,12 +63,35 @@ public class MainActivity extends AppCompatActivity implements  HomeFragment.OnN
         transaction.addToBackStack(null);
 
         transaction.commit();
+        if(frag instanceof ShowListEventFrag){
+            ((ShowListEventFrag) frag).setOnClickItemListener(event1 -> openFragDetail(event1));
+        }
     }
     @FunctionalInterface
     public interface OnCreateEvent {
         void onCreateE();
     }
+    private void openFragDetail(Event event) {
+        EventDetailFragment eventdetailed= EventDetailFragment.newInstance(event);
 
+        FragmentManager fm = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        // Ajout d'une animation
+        transaction.setCustomAnimations(
+                android.R.anim.slide_in_left,
+                android.R.anim.fade_out,
+                android.R.anim.fade_in,
+                android.R.anim.slide_out_right
+        );
+        // Plus d'info : https://developer.android.com/guide/fragments/animate
+
+        transaction.replace(R.id.frag_main_content, eventdetailed);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
     private MainActivity.OnCreateEvent DatabaseHandler;
 
 
