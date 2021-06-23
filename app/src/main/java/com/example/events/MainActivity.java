@@ -12,16 +12,19 @@ import android.widget.Toast;
 import com.example.events.event.Event;
 import com.example.events.frags.AddEventFrag;
 import com.example.events.frags.ShowListEventFrag;
+import com.example.events.helper.DatabaseHandler;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements  HomeFragment.OnNavListener{
+    private DatabaseHandler db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new DatabaseHandler(this);
 
         HomeFragment home = HomeFragment.newInstance();
         home.setNavListener(this);
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements  HomeFragment.OnN
                 frag = AddEventFrag.newInstance();
                 break;
             case SHOWEVENTS:
-                frag = ShowListEventFrag.newInstance();
+                frag = ShowListEventFrag.newInstance(db.getAllEvents());
                 break;
 
             default:
@@ -60,5 +63,12 @@ public class MainActivity extends AppCompatActivity implements  HomeFragment.OnN
 
         transaction.commit();
     }
+    @FunctionalInterface
+    public interface OnCreateEvent {
+        void onCreateE();
+    }
+
+    private MainActivity.OnCreateEvent DatabaseHandler;
+
 
 }

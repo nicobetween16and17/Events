@@ -8,17 +8,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.events.MainActivity;
 import com.example.events.R;
 import com.example.events.event.Event;
+import com.example.events.helper.DatabaseHandler;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class AddEventFrag extends Fragment {
+public class AddEventFrag extends Fragment implements MainActivity.OnCreateEvent {
     private EditText eventName;
     private DatePicker eventDatePicker;
     private Button createEvent;
@@ -37,18 +40,20 @@ public class AddEventFrag extends Fragment {
         eventName=v.findViewById(R.id.name);
         createEvent=v.findViewById(R.id.createEvent);
         createEvent.setOnClickListener(view ->{
-            createEvent();
+            Toast.makeText(getActivity(), "Creation of event named "+ eventName.getText().toString(), Toast.LENGTH_LONG).show();
+            onCreateE();
         });
 
         return v;
     }
-    public void createEvent(){
-        int year=eventDatePicker.getYear();
-        int month=eventDatePicker.getMonth();
-        int day=eventDatePicker.getDayOfMonth();
-        Event event = new Event(eventName.getText().toString(),new Date(year,month,day));
 
+
+    @Override
+    public void onCreateE() {
+        DatabaseHandler db = new DatabaseHandler(this.getContext());
+        String EventName = eventName.getText().toString();
+        Date EventDate = new Date(eventDatePicker.getYear(),eventDatePicker.getMonth(),eventDatePicker.getDayOfMonth());
+        db.addEvent(new Event(EventName,EventDate.toString()));
+        getActivity().getFragmentManager().popBackStack();
     }
-
-
 }
