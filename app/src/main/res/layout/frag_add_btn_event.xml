@@ -18,9 +18,10 @@
 
     <EditText
         android:id="@+id/name"
-
+        android:textStyle="italic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:hint="Nom de l'Event"
         />
     <DatePicker
