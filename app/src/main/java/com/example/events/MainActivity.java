@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.events.frags.Edit_Frag;
 import com.example.events.frags.EventDetailFragment;
 import com.example.events.frags.HomeFragment;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.events.event.Event;
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements  HomeFragment.OnN
 
         transaction.commit();
     }
+
     private MainActivity.OnCreateEvent DatabaseHandler;
 
 

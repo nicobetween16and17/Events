@@ -93,16 +93,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return eventList;
     }
-    public int updateEvent(Event contact) {
+    public int updateEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
-        values.put(KEY_DATE, contact.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        values.put(KEY_NAME, event.getName());
+        values.put(KEY_DATE, event.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
 
         // updating row
         return db.update(TABLE_EVENT, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+                new String[] { String.valueOf(event.getID()) });
     }
     public void deleteEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
