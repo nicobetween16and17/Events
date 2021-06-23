@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class ShowListEventFrag extends Fragment {
     private ListView LVevent;
     private ArrayList<Event> EventsList;
-    public static AddEventFrag newInstance(ArrayList<Event> events){
-        AddEventFrag frag = new AddEventFrag();
+    public static ShowListEventFrag newInstance(ArrayList<Event> events){
+        ShowListEventFrag frag = new ShowListEventFrag();
         Bundle args = new Bundle();
         args.putParcelableArrayList("eventsList", events);
         frag.setArguments(args);
