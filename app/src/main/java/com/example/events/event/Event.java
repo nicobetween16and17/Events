@@ -3,6 +3,8 @@ package com.example.events.event;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,17 +12,17 @@ import java.util.regex.Pattern;
 public class Event implements Parcelable {
     private int ID;
     private String name;
-    private String date;
+    private LocalDate date;
 
     public Event() {
     }
 
-    public Event(String name, String date) {
+    public Event(String name, LocalDate date) {
         this.name = name;
         this.date = date;
     }
 
-    public Event(int ID, String name, String date) {
+    public Event(int ID, String name, LocalDate date) {
         this.ID = ID;
         this.name = name;
         this.date = date;
@@ -34,11 +36,11 @@ public class Event implements Parcelable {
         this.name = name;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -59,12 +61,12 @@ public class Event implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(ID);
         dest.writeString(name);
-        dest.writeString(date);
+        dest.writeString(date.format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
     Event(Parcel parcel) {
         this.ID = parcel.readInt();
         this.name = parcel.readString();
-        this.date = parcel.readString();
+        this.date = LocalDate.parse(parcel.readString(), DateTimeFormatter.ISO_LOCAL_DATE);
 
     }
     public static final Parcelable.Creator<Event> CREATOR = new Creator<Event>() {

@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements  HomeFragment.OnN
         transaction.commit();
 
     }
-    @Override
     public void onSelect(HomeFragment.SelectedView selected) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 

@@ -18,6 +18,7 @@ import com.example.events.event.Event;
 import com.example.events.helper.DatabaseHandler;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -52,8 +53,8 @@ public class AddEventFrag extends Fragment implements MainActivity.OnCreateEvent
     public void onCreateE() {
         DatabaseHandler db = new DatabaseHandler(this.getContext());
         String EventName = eventName.getText().toString();
-        Date EventDate = new Date(eventDatePicker.getYear(),eventDatePicker.getMonth(),eventDatePicker.getDayOfMonth());
-        db.addEvent(new Event(EventName,EventDate.toString()));
-        getActivity().getFragmentManager().popBackStack();
+        LocalDate EventDate = LocalDate.of(eventDatePicker.getYear(),eventDatePicker.getMonth(),eventDatePicker.getDayOfMonth());
+        db.addEvent(new Event(EventName,EventDate));
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 }

@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.events.MainActivity;
 import com.example.events.event.Event;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -46,7 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, event.getName()); // Contact Name
-        values.put(KEY_DATE, event.getDate().toString()); // Contact Phone
+        values.put(KEY_DATE, event.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE)); // Contact Phone
 
         // Inserting Row
         db.insert(TABLE_EVENT, null, values);
@@ -63,7 +65,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Event event= new Event(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), (cursor.getString(2)));
+                cursor.getString(1), (LocalDate.parse(cursor.getString(2), DateTimeFormatter.ISO_LOCAL_DATE)));
         return event;
     }
 
@@ -82,7 +84,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Event event = new Event();
                 event.setID(Integer.parseInt(cursor.getString(0)));
                 event.setName(cursor.getString(1));
-                event.setDate(cursor.getString(2));
+                event.setDate((LocalDate.parse(cursor.getString(2),DateTimeFormatter.ISO_LOCAL_DATE)));
 
                 eventList.add(event);
             } while (cursor.moveToNext());
@@ -96,7 +98,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getName());
-        values.put(KEY_DATE, contact.getDate().toString());
+        values.put(KEY_DATE, contact.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
 
         // updating row
         return db.update(TABLE_EVENT, values, KEY_ID + " = ?",
