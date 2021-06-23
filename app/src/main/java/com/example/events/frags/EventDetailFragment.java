@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.events.R;
 import com.example.events.event.Event;
+import com.example.events.helper.DatabaseHandler;
 
 import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
@@ -24,8 +25,9 @@ import java.time.format.DateTimeFormatter;
 public class EventDetailFragment extends Fragment {
     private TextView tvName, tvDate;
     private LinearLayout layoutDesc;
-    private Button buttonEdit;
+    private Button buttonEdit,buttonDelete;
     private Event event1;
+    private DatabaseHandler dbh;
 
     public EventDetailFragment() {
         // Required empty public constructor
@@ -44,6 +46,7 @@ public class EventDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             event1 = getArguments().getParcelable("event_element");
+
         }
     }
 
@@ -52,15 +55,22 @@ public class EventDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_event, container, false);
-
+        dbh = new DatabaseHandler(getContext());
         // FindViewById
         tvName = v.findViewById(R.id.tv_name);
         layoutDesc = v.findViewById(R.id.linear_layout_event);
         tvDate = v.findViewById(R.id.tv_date);
         buttonEdit=v.findViewById(R.id.button_edit);
+        buttonDelete=v.findViewById(R.id.button_delete);
         buttonEdit.setOnClickListener(view->{
             //TODO Resolve crash on edit
             openFragEdit(event1);
+        });
+        buttonDelete.setOnClickListener(view->{
+            dbh.deleteEvent(event1);
+
+            getActivity().getSupportFragmentManager().popBackStack();
+            initializeViewData();
         });
 
         // Méthode d'initilisation

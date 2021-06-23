@@ -53,7 +53,7 @@ public class AddEventFrag extends Fragment implements MainActivity.OnCreateEvent
     public void onCreateE() {
         DatabaseHandler db = new DatabaseHandler(this.getContext());
         String EventName = eventName.getText().toString();
-        LocalDate EventDate = LocalDate.of(eventDatePicker.getYear(),eventDatePicker.getMonth(),eventDatePicker.getDayOfMonth());
+        LocalDate EventDate = LocalDate.of(eventDatePicker.getYear(),eventDatePicker.getMonth()+1,eventDatePicker.getDayOfMonth());
         db.addEvent(new Event(EventName,EventDate));
         getActivity().getSupportFragmentManager().popBackStack();
     }
